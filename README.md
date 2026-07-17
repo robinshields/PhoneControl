@@ -2,7 +2,7 @@
 
 Turn your phone into a wireless slideshow remote for your Mac — point your camera at a QR code, and you're clicking through slides. No app install, no Bluetooth pairing, no App Store. A keyboard and trackpad are available too, if you need them.
 
-## Quick start
+## Run from source
 
 ```bash
 npm install
@@ -36,9 +36,32 @@ node server.js all          # same as "mouse"
 
 The mode isn't just a UI toggle — the server only ever registers the socket events a given mode allows, so, e.g. in `controller` mode there is no code path that can move the mouse or type a key, even if something tried to send that event directly.
 
-## Standalone binary
+## Run from binary
 
-Don't want to deal with `npm install`? Build a single self-contained executable — the Node runtime, the app, and its native dependencies are all packed into one file, so it runs on a bare Mac with nothing pre-installed:
+No Node.js install needed — download a prebuilt, self-contained executable:
+
+1. **[Download the latest release](https://github.com/robinshields/PhoneControl/releases/latest/download/bin.zip)**
+2. Unzip it:
+   ```bash
+   unzip bin.zip && cd bin
+   ```
+3. Make the one matching your Mac executable:
+   ```bash
+   chmod +x phonecontrol-arm64   # Apple Silicon
+   chmod +x phonecontrol-x64     # Intel
+   ```
+4. Run it:
+   ```bash
+   ./phonecontrol-arm64            # controller mode (default)
+   ./phonecontrol-arm64 keyboard
+   ./phonecontrol-arm64 mouse
+   ```
+
+Since the binary isn't notarized, macOS Gatekeeper will likely refuse to open it on the first attempt ("cannot be opened because the developer cannot be verified"). Right-click the file → **Open** → confirm **Open** in the dialog, and it'll run normally from then on.
+
+## Build binary
+
+Build the standalone executables yourself instead of downloading them — the Node runtime, the app, and its native dependencies are all packed into one file per architecture, so the result runs on a bare Mac with nothing pre-installed:
 
 ```bash
 npm install
@@ -50,13 +73,7 @@ This produces two files in `./bin`:
 - `phonecontrol-arm64` — Apple Silicon Macs
 - `phonecontrol-x64` — Intel Macs
 
-Copy the right one (or zip up both and let the recipient pick) to any Mac and run it directly, mode argument and all:
-
-```bash
-./phonecontrol-arm64            # controller mode
-./phonecontrol-arm64 keyboard
-./phonecontrol-arm64 mouse
-```
+Copy the right one (or zip up both and let the recipient pick) to any Mac and run it directly, mode argument and all — see [Run from binary](#run-from-binary) above.
 
 ## How it works
 
@@ -74,8 +91,19 @@ Copy the right one (or zip up both and let the recipient pick) to any Mac and ru
 - The server binds only to your Mac's LAN address, never `0.0.0.0`, so it's unreachable from outside your network.
 - Only the socket events enabled by the current mode are ever wired up server-side (see [Other modes](#other-modes)).
 
+## Accessibility permission
+
+macOS requires explicit permission before any app can simulate keystrokes or mouse movement. The first time PhoneControl needs to do this, macOS should prompt you automatically — click **Allow**. If the prompt never appears, or you dismissed it by mistake:
+
+1. Open **System Settings** → **Privacy & Security** → **Accessibility**.
+2. Find the app that ran PhoneControl in the list — **Terminal** (or iTerm, etc.) if you ran it with `npm start`, or **phonecontrol-arm64**/**phonecontrol-x64** if you ran the standalone binary.
+3. Turn its toggle **on**. If it isn't listed at all, click **+**, browse to the app (Terminal is in `/Applications/Utilities`), and add it.
+4. Stop PhoneControl (<kbd>Ctrl</kbd>+<kbd>C</kbd>) and start it again.
+
+This is a one-time setup per app — it'll stick between runs.
+
 ## Requirements
 
-- macOS with Node.js 18+
+- macOS with Node.js 18+ (only if running from source — see [Run from binary](#run-from-binary) for a Node-free option)
 - Mac and phone on the same WiFi network
-- Accessibility permission for Terminal/Node the first time it simulates a keystroke or mouse move (macOS will prompt automatically)
+- Accessibility permission granted — see [above](#accessibility-permission)
