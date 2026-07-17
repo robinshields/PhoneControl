@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>PhoneControl</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<script>window.PC_MODE = "__PC_MODE__";</script>
+
+<div id="status" class="status status--connecting">Connecting…</div>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="keyboard" type="button">
+    <span class="tab-icon">⌨️</span><span class="tab-label">Keyboard</span>
+  </button>
+  <button class="tab" data-tab="remote" type="button">
+    <span class="tab-icon">📽️</span><span class="tab-label">Remote</span>
+  </button>
+  <button class="tab" data-tab="mouse" type="button">
+    <span class="tab-icon">🖱️</span><span class="tab-label">Mouse</span>
+  </button>
+</nav>
+
+<main>
+
+  <!-- Keyboard panel -->
+  <section id="panel-keyboard" class="panel active">
+    <div class="keyboard" id="keyboard"></div>
+  </section>
+
+  <!-- Remote panel -->
+  <section id="panel-remote" class="panel">
+    <div class="remote">
+      <button class="remote-btn" id="remote-back" type="button" aria-label="Back">
+        <span class="remote-arrow">&#8592;</span>
+        <span class="remote-text">Back</span>
+      </button>
+      <button class="remote-btn" id="remote-forward" type="button" aria-label="Forward">
+        <span class="remote-arrow">&#8594;</span>
+        <span class="remote-text">Forward</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Mouse panel -->
+  <section id="panel-mouse" class="panel">
+    <div class="mouse-wrap">
+      <div class="trackpad" id="trackpad"></div>
+      <div class="mouse-buttons">
+        <button class="mouse-btn" id="mouse-left" type="button">Left</button>
+        <button class="mouse-btn" id="mouse-right" type="button">Right</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

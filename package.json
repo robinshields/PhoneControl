@@ -1,0 +1,39 @@
+{
+  "name": "phonecontrol",
+  "version": "1.0.0",
+  "description": "Turn any phone's browser into a wireless keyboard, mouse, and slideshow remote for a Mac. No app install, no Bluetooth pairing.",
+  "main": "server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server.js",
+    "build": "pkg . --targets node22-macos-arm64,node22-macos-x64 --out-path bin"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@nut-tree-fork/nut-js": "^4.2.6",
+    "cookie": "^0.6.0",
+    "cookie-parser": "^1.4.6",
+    "express": "^4.19.2",
+    "qrcode-terminal": "^0.12.0",
+    "socket.io": "^4.7.5"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^6.21.0"
+  },
+  "bin": "server.js",
+  "pkg": {
+    "assets": [
+      "views/**/*",
+      "public/**/*",
+      "node_modules/@nut-tree-fork/libnut-darwin/build/Release/*.node",
+      "node_modules/@nut-tree-fork/node-mac-permissions/build/Release/*.node"
+    ],
+    "targets": [
+      "node22-macos-arm64",
+      "node22-macos-x64"
+    ],
+    "outputPath": "bin"
+  }
+}

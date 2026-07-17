@@ -1,0 +1,178 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --surface: #1a1d24;
+  --surface-2: #23272f;
+  --border: #2e333d;
+  --text: #e8eaed;
+  --text-dim: #8b909c;
+  --accent: #4c8dff;
+  --accent-active: #3a72dd;
+  --danger: #e5484d;
+  --ok: #35c078;
+  --radius: 14px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+/* Connection status banner */
+.status {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 6px 8px;
+  transition: background-color 0.2s, color 0.2s;
+}
+.status--connecting { background: #3a3418; color: #e8c547; }
+.status--connected { background: #14261d; color: var(--ok); }
+.status--disconnected { background: #2a1517; color: var(--danger); }
+
+/* Tabs */
+.tabs {
+  display: flex;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 4px;
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 11px;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+}
+.tab-icon { font-size: 18px; line-height: 1; }
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.panel {
+  display: none;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  padding: 10px;
+}
+.panel.active { display: flex; }
+
+/* ---------------- Keyboard ---------------- */
+.keyboard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+.kb-row {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+}
+.key {
+  flex: 1;
+  min-width: 0;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 15px;
+  padding: 0;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.key:active,
+.key.pressed { background: var(--accent-active); border-color: var(--accent-active); }
+.key--wide { flex: 1.7; font-size: 13px; }
+.key--space { flex: 5; }
+.key--shift.active { background: var(--accent); border-color: var(--accent); }
+
+/* ---------------- Remote ---------------- */
+.remote {
+  flex: 1;
+  display: flex;
+  gap: 12px;
+}
+.remote-btn {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.remote-btn:active { background: var(--accent-active); border-color: var(--accent-active); }
+.remote-arrow { font-size: 48px; line-height: 1; }
+.remote-text { font-size: 14px; font-weight: 600; color: var(--text-dim); }
+
+/* ---------------- Mouse ---------------- */
+.mouse-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.trackpad {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  min-height: 0;
+}
+.mouse-buttons {
+  display: flex;
+  gap: 10px;
+  height: 56px;
+  flex-shrink: 0;
+}
+.mouse-btn {
+  flex: 1;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-dim);
+  font-size: 14px;
+  font-weight: 600;
+}
+.mouse-btn:active { background: var(--accent-active); color: var(--text); border-color: var(--accent-active); }
