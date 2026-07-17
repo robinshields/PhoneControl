@@ -1,6 +1,16 @@
 # PhoneControl
 
-Turn your phone into a wireless slideshow remote for your Mac — point your camera at a QR code, and you're clicking through slides. No app install, no Bluetooth pairing, no App Store. A keyboard and trackpad are available too, if you need them.
+Turn your phone into a wireless slideshow remote for your Mac — point your camera at a QR code, and a website will open with forward and back controls. Also offers functionality as a remote keyboard or touchbpad mouse.
+
+## Accessibility Permission (One-Time)
+
+macOS requires explicit permission to trigger keystrokes or mouse movement. The first time PhoneControl needs to do this, macOS should prompt you automatically — click **Allow**. If the prompt never appears, or you dismissed it by mistake:
+
+1. Open **System Settings** → **Privacy & Security** → **Accessibility**.
+2. Find the app that ran PhoneControl in the list — **Terminal** (or iTerm, etc.) if you ran it with `npm start`, or **phonecontrol-arm64**/**phonecontrol-x64** if you ran the standalone binary.
+3. Turn its toggle **on**. If it isn't listed at all, click **+**, browse to the app (Terminal is in `/Applications/Utilities`), and add it.
+4. Stop PhoneControl (<kbd>Ctrl</kbd>+<kbd>C</kbd>) and start it again.
+
 
 ## Run from source
 
@@ -13,13 +23,11 @@ Scan the QR code printed in your terminal with your phone's camera. That's it �
 
 ## Slideshow remote (the main event)
 
-By default, PhoneControl starts in **controller mode**: your phone shows just two big buttons, Back and Forward. Scan, tap, present. This is deliberately the default and the simplest mode — most people picking up PhoneControl just want to advance slides from across the room without digging a clicker out of a bag.
-
-Forward/Back send the Right/Left arrow keys, which drive slide navigation in Keynote, PowerPoint, Google Slides (in the browser), Preview, and most other presentation tools.
+By default, PhoneControl starts in **controller mode**: your phone shows just two big buttons, Back and Forward. 
 
 ## Other modes
 
-PhoneControl also does double duty as a wireless keyboard and trackpad, available via a mode argument on startup:
+PhoneControl also offers wireless keyboard and trackpad modes, available via a mode argument on startup:
 
 ```bash
 node server.js              # controller — remote only (default)
@@ -34,11 +42,9 @@ node server.js all          # same as "mouse"
 | `keyboard` | Keyboard, Remote | You need to type something too (search box, notes, etc.) |
 | `mouse` / `all` | Keyboard, Remote, Mouse | You want full remote control of the Mac |
 
-The mode isn't just a UI toggle — the server only ever registers the socket events a given mode allows, so, e.g. in `controller` mode there is no code path that can move the mouse or type a key, even if something tried to send that event directly.
-
 ## Run from binary
 
-No Node.js install needed — download a prebuilt, self-contained executable:
+(No node installation required)
 
 1. **[Download the latest release](https://github.com/robinshields/PhoneControl/releases/latest/download/bin.zip)**
 2. Unzip it:
@@ -57,7 +63,8 @@ No Node.js install needed — download a prebuilt, self-contained executable:
    ./phonecontrol-arm64 mouse
    ```
 
-Since the binary isn't notarized, macOS Gatekeeper will likely refuse to open it on the first attempt ("cannot be opened because the developer cannot be verified"). Right-click the file → **Open** → confirm **Open** in the dialog, and it'll run normally from then on.
+Since the binary isn't notarized, macOS Gatekeeper will likely refuse to open it on the first attempt. You will need to grant permissions for the binary to run
+
 
 ## Build binary
 
@@ -90,17 +97,6 @@ Copy the right one (or zip up both and let the recipient pick) to any Mac and ru
 - Any request missing the token entirely, or three requests with the wrong token, shuts the server down immediately.
 - The server binds only to your Mac's LAN address, never `0.0.0.0`, so it's unreachable from outside your network.
 - Only the socket events enabled by the current mode are ever wired up server-side (see [Other modes](#other-modes)).
-
-## Accessibility permission
-
-macOS requires explicit permission before any app can simulate keystrokes or mouse movement. The first time PhoneControl needs to do this, macOS should prompt you automatically — click **Allow**. If the prompt never appears, or you dismissed it by mistake:
-
-1. Open **System Settings** → **Privacy & Security** → **Accessibility**.
-2. Find the app that ran PhoneControl in the list — **Terminal** (or iTerm, etc.) if you ran it with `npm start`, or **phonecontrol-arm64**/**phonecontrol-x64** if you ran the standalone binary.
-3. Turn its toggle **on**. If it isn't listed at all, click **+**, browse to the app (Terminal is in `/Applications/Utilities`), and add it.
-4. Stop PhoneControl (<kbd>Ctrl</kbd>+<kbd>C</kbd>) and start it again.
-
-This is a one-time setup per app — it'll stick between runs.
 
 ## Requirements
 
