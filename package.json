@@ -1,6 +1,6 @@
 {
   "name": "phonecontrol",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Turn any phone's browser into a wireless keyboard, mouse, and slideshow remote for a Mac. No app install, no Bluetooth pairing.",
   "main": "server.js",
   "type": "commonjs",
