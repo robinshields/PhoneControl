@@ -28,7 +28,8 @@
       "views/**/*",
       "public/**/*",
       "node_modules/@nut-tree-fork/libnut-darwin/build/Release/*.node",
-      "node_modules/@nut-tree-fork/node-mac-permissions/build/Release/*.node"
+      "node_modules/@nut-tree-fork/node-mac-permissions/build/Release/*.node",
+      "node_modules/socket.io/client-dist/**/*"
     ],
     "targets": [
       "node22-macos-arm64",
