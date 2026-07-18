@@ -103,3 +103,10 @@ Copy the right one (or zip up both and let the recipient pick) to any Mac and ru
 - macOS with Node.js 18+ (only if running from source — see [Run from binary](#run-from-binary) for a Node-free option)
 - Mac and phone on the same WiFi network
 - Accessibility permission granted — see [above](#accessibility-permission)
+
+## Keeping your phone's screen awake
+
+PhoneControl can't reliably stop your phone from auto-locking mid-presentation — this is a plain HTTP page on your local network, and mobile browsers (Safari in particular) only grant real "stay awake" access to pages served over HTTPS. If your screen keeps dimming, it's easiest to just bump your phone's own auto-lock timeout before you start:
+
+- **iOS**: Settings → Display & Brightness → Auto-Lock → set it longer (or "Never"), then change it back afterward.
+- **Android**: Settings → Display → Screen timeout → set it longer.
